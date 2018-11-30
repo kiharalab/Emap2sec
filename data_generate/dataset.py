@@ -1,3 +1,28 @@
+
+# coding: utf-8
+
+# In[1]:
+
+#!/usr/bin/env python
+
+# Copyright (C) 2018 Sai Raghavendra Maddhuri, Genki Terashi, Daisuke Kihara, and Purdue University.
+# This file is a part of Emap2sec package with -
+# Reference: Maddhuri S,Terashi G, Kihara D. Protein Secondary Structure Detection in Intermediate Resolution Cryo-Electron Microscopy Maps Using Deep Learning. In submission (2018).
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 #Run Inst.s
 #python dataset.py test_out out.dssp outputD
 
@@ -27,21 +52,7 @@ j=0;
 acount=0
 bcount=0
 ccount=0
-'''for line in lines2:
-    if(line.split()[4]=='H' or line.split()[4]=='G' or line.split()[4]=='I'):
-        labelArray.append(2);
-        acount+=1
-    elif(line.split()[4]=='B' or line.split()[4]=='E'):
-        labelArray.append(1);
-        bcount+=1
-    else:
-        labelArray.append(0);
-        ccount+=1
-print("alhpa : %d, beta : %d, none : %d\n"% (acount,bcount,ccount))
-acount=0
-bcount=0
-ccount=0
-'''
+
 for line in lines4:
     if(line.split()[0]=='ASG'):
         if(line.split()[5]=='H' or line.split()[5]=='G' or line.split()[5]=='I'):
@@ -115,7 +126,7 @@ for line in lines1:
             else:           
                 labelA = [str(k) for k,l in enumerate(ones) if l!=0]
                 label = ':'.join(labelA)
-            #print(str(int(int(coords[0])/factor))+","+str(int(int(coords[1])/factor))+","+str(int(int(coords[2].rstrip())/factor))+',')
+
             fil3.write(str(int(int(coords[0])/factor))+","+str(int(int(coords[1])/factor))+","+str(int(int(coords[2].rstrip())/factor))+',')
             fil3.write(label)
             #print(label);
