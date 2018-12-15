@@ -147,3 +147,9 @@ information available]
 visual/Visual2.pl protein_trimmap outputP1_0 -p > out_fin1.pdb  
 visual/Visual2.pl protein_trimmap outputP2_0 -p > out_fin2.pdb  
 
+Upon pymol installation, from pymol download directory you can run the below code from command line,  
+<b>pymol out_fin2.pdb</b>  
+or
+Open Pymol GUI and load visual.pdb.
+
+Then run <b>run pymol_script.py</b> from the pymol command line. This gives you the final clean secondary structure visualization.
