@@ -1,0 +1,12 @@
+from pymol import cmd
+cmd.show_as('spheres','visual')
+cmd.select('chain D and visual')
+cmd.hide("spheres","sele")
+cmd.delete("sele")
+cmd.color("magenta",'chain C and visual')
+cmd.color("yellow",'chain B and visual')
+cmd.color("limegreen",'chain A and visual')
+cmd.color("limegreen",'chain A and visual')
+cmd.color("magenta",'ss h')
+cmd.color("yellow",'ss s')
+cmd.color("limegreen",'ss l')
