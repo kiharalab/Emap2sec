@@ -7,7 +7,7 @@ License: GPL v3 for academic use. (For commercial use, please contact us for dif
 
 Contact: Daisuke Kihara (dkihara@purdue.edu)
 
-Reference: Maddhuri S,Terashi G, Kihara D. Protein Secondary Structure Detection in Intermediate Resolution Cryo-Electron Microscopy Maps Using Deep Learning. In submission (2018).
+Cite : Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, & Daisuke Kihara, Protein secondary structure detection in intermediate-resolution cyor-EM maps using deep learning. Nature Methods. (2019)
 
 
 ## Pre-required software
