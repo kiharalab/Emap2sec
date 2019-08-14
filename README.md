@@ -24,9 +24,9 @@ Generate the input file called [your_map_id]_dataset from your map file by follo
 
   ## 1) Trimmap generation  
 
-<b>data_generate/map2train_fix [sample_mrc] [options] > [output_trimmap_filename]</b>  
+<b>data_generate/map2train [sample_mrc] [options] > [output_trimmap_filename]</b>  
 <b>INPUTS</b>:  
-map2train_fix expects sample_mrc to be a valid filename. Supported file formats are Situs, CCP4, and MRC2000. 
+map2train expects sample_mrc to be a valid filename. Supported file formats are Situs, CCP4, and MRC2000. 
 Input may be gzipped. Format is deduced from FILE's extension.  
 
 <b>SAMPLE INPUTS</b>:  
@@ -74,9 +74,7 @@ default=false
 -h, --help, -?, /? Displays the list of above options.  
   
 <b>USAGE:</b>  
-./map2train_fix protein.situs -c 2.75 >  protein_trimmap  
-
-./map2train_fix protein.map -sstep 2 -r 3.0 -c 0.0 >  protein_trimmap  
+./map2train ../data/1733.mrc -c 2.75 > ../data/trimmap
 
 
 ## 2) [OPTIONAL] STRIDE File generation  
@@ -108,10 +106,10 @@ python data_generate/dataset.py protein_trimmap protein.stride protein_dataset p
   
 ## Emap2sec SS identification (Phase1 and Phase2)  
   Run Emap2sec program for identification of secondary structures.  
-Use run_scripts/Emap2sec_sim.py when your input is a simulated EM map and use run_scripts/Emap2sec_exp.py when your input is an experimental EM map.  
+Use run_scripts/emap2sec.py when your input is an experimental EM map.  
 This program is a python script and it works with both python2 and python3.  
 
-<b>python run_scripts/Emap2sec_[sim/exp].py [dataset_location_file]</b>  
+<b>python run_scripts/emap2sec.py [dataset_location_file]</b>  
 <b>INPUT:</b>  
 This program takes input as a file that contains location of input dataset.  
 It also allows you to test multiple files at a time. File locations are to be "\n" delimited.  
@@ -122,14 +120,13 @@ Sample output files are provided in the github link in Downloads tab and are nam
 and outputP2_0 for Phase2.  
 <b>USAGE:</b>  
 First run : echo [location of protein_dataset file] > dataset_location_file to save the location of your 
-protein dataset file in dataset_location_file. You can then run run_scripts/Emap2sec_[sim/exp].py as shown below.  
+protein dataset file in dataset_location_file. You can then run run_scripts/emap2sec.py as shown below.  
  
-python run_scripts/Emap2sec_sim.py dataset_location_file  
-python run_scripts/Emap2sec_exp.py dataset_location_file   
+python Emap2sec.py ../data/input_file.txt 
 
 ## SS Visualization   
   Visualize the secondary structure assignments made in the previous step using the output file of Emap2sec SS identification program. Below program generates a PDB file containing secondary structure assignments. You can visualize these pdb structures using a molecular visualization tool such as pymol  
-<b>visual/Visual2.pl [sample_trimmap] [output_file] [OPTIONS] > out_fin.pdb</b>  
+<b>visual/Visual.pl ../data/trimmap ../results/outputP2_0 -p > out_fin.pdb</b>  
 
 <b>INPUT:</b>  
 This program takes as inputs, the trimmap file generated in step 1 of input file generation
@@ -144,8 +141,8 @@ A sample output file is provided in the github link in Downloads tab.
 information available]  
 
 <b>USAGE:</b>  
-visual/Visual2.pl protein_trimmap outputP1_0 -p > out_fin1.pdb  
-visual/Visual2.pl protein_trimmap outputP2_0 -p > out_fin2.pdb  
+visual/Visual.pl protein_trimmap outputP1_0 -p > out_fin1.pdb  
+visual/Visual.pl protein_trimmap outputP2_0 -p > out_fin2.pdb  
 
 Upon pymol installation, from pymol download directory you can run the below code from command line,  
 <b>pymol out_fin2.pdb</b>  
