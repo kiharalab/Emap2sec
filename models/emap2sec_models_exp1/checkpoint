@@ -1,6 +1,0 @@
-model_checkpoint_path: "/net/kihara/home/smaddhur/tensorFlow/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-108000"
-all_model_checkpoint_paths: "/net/kihara/home/smaddhur/tensorFlow/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-104000"
-all_model_checkpoint_paths: "/net/kihara/home/smaddhur/tensorFlow/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-105000"
-all_model_checkpoint_paths: "/net/kihara/home/smaddhur/tensorFlow/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-106000"
-all_model_checkpoint_paths: "/net/kihara/home/smaddhur/tensorFlow/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-107000"
-all_model_checkpoint_paths: "/net/kihara/home/smaddhur/tensorFlow/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-108000"
