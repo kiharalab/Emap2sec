@@ -1,8 +1,7 @@
 #!/usr/bin/perl
-
 # Copyright (C) 2018 Sai Raghavendra Maddhuri, Genki Terashi, Daisuke Kihara, and Purdue University.
 # This file is a part of Emap2sec package with -
-# Reference: Maddhuri S,Terashi G, Kihara D. Protein Secondary Structure Detection in Intermediate Resolution Cryo-Electron Microscopy Maps Using Deep Learning. In submission (2018).
+# Reference:  Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, and Daisuke Kihara. Protein Secondary Structure Detection in Intermediate Resolution Cryo-Electron Microscopy Maps Using Deep Learning. In submission (2018).
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,12 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 if(@ARGV!=3){
- print "$0 [output of map2train] [output of Sai's script] [-n or -p] > tmp.pdb\n";
+ print "$0 [output of map2train] [output of Sai's script] [-n or -p]\n";
  print "-p : Show predicted data\n";
  print "-n : Show native data\n";
- print "Example\n";
- print "$0 train.out Sai.out -p > tmp.pdb \n";
- print "THEN; pymol -u ./tmp.pdb \n";
  exit;
 }
 
@@ -34,21 +30,50 @@ if(@ARGV!=3){
 
 @cd=();
 $cnt=0;
+
+@NB=();
+$a=1;
+foreach $l (@B){ #inside
+ if($$l[0]=~/^#C:/){
+  next if($$l[2]==-2);
+  $NB[$$l[14]][$$l[15]][$$l[16]]=1;
+  print "#IN $a [$$l[14]][$$l[15]][$$l[16]]\n";
+  $a++;
+ }
+}
+
+print "#Inside $a\n";
+
 foreach $l (@B){
  if($$l[0]=~/^#C:/){
+  #next if($$l[2]==-1); 
   $bx=$$l[10];
   $by=$$l[11];
   $bz=$$l[12];
   $step=$$l[8];
   $Nstep=$$l[6];
 
-  next if($$l[2]==-1);
-
+  $px=$$l[14];
+  $py=$$l[15];
+  $pz=$$l[16];
+  $flag=0;
+  for($x=-4;$x<5;$x+=4){
+   next if($px+$x<0);
+  for($y=-4;$y<5;$y+=4){
+   next if($py+$y<0);
+  for($z=-4;$z<5;$z+=4){
+   next if($pz+$z<0);
+   if($NB[$px+$x][$py+$y][$pz+$z]==1){
+    $flag=1;
+    next;
+   }
+  }}}
+  next if($flag==0);
   #Center xyz
   $back=int(($Nstep-1)/2);
-  $cx=$bx+$back;
-  $cy=$by+$back;
-  $cz=$bz+$back;
+  $cx=$bx+$back*$step;
+  $cy=$by+$back*$step;
+  $cz=$bz+$back*$step;
   #print"$cx $cy $cz <- $bx $by $bz\n";
   $cd[$cnt][0]=$cx;
   $cd[$cnt][1]=$cy;
@@ -56,6 +81,7 @@ foreach $l (@B){
   $cnt++;
  }
 }
+
 
 $cnt2=0;
 
@@ -68,46 +94,56 @@ foreach $l (@{$C[0]}){
 }else{
 $cnt2=0;
 foreach $l (@{$C[1]}){
- #print"$l\n";
+ #print"$cnt2 $l\n";
  $pre[$cnt2]=$l;
  $cnt2++;
 }
 }
+#Show results in PDB format
 
-#Heat Map
+print"#Cd cnt= $cnt\n"; #Coordinates from trimmap output.
+print"#Data= $cnt2\n";
 
-print "load tmp.pdb,tmp\n";
-print "show spheres\n";
-
-$Nmap=0;
-foreach $l (@C){
- if($$l[-1] =~/]$/){
-  $$l[-3]=~s/\[//g;
-  $$l[-1]=~s/\]//g;
-
-
-  #print "$$l[-3] $$l[-2]  $$l[-1]\n";
-  $map[$Nmap][0]=$$l[3];#H Red
-  $map[$Nmap][1]=$$l[1];#C Green
-  $map[$Nmap][2]=$$l[-2];#E Blue
-  print "# $map[$Nmap][0],$map[$Nmap][1],$map[$Nmap][2]\n";
-  printf("set_color p%d, [ %.2f, %.2f, %.2f, ]\n",$Nmap+1,$map[$Nmap][0],$map[$Nmap][1],$map[$Nmap][2]);
-  printf("color p%d, (resi %d)\n",$Nmap+1,$Nmap+1);
-  $Nmap++;
+$natm=1;
+for($i=0;$i<$cnt2;$i++){
+ if($pre[$i]==0){
+  printf("ATOM%7d  %3s %3s%2s%4d    ",$natm,"CA ","ALA"," A",$natm);
+  printf("%8.3f%8.3f%8.3f%6.2f%6.2f\n",$cd[$i][0],$cd[$i][1],$cd[$i][2],1,1);
+  $natm++;
+ }
+}
+print "TER\n";
+$natm=1;
+for($i=0;$i<$cnt2;$i++){
+ if($pre[$i]==1){
+  printf("ATOM%7d  %3s %3s%2s%4d    ",$natm,"CA ","ALA"," B",$natm);
+  printf("%8.3f%8.3f%8.3f%6.2f%6.2f\n",$cd[$i][0],$cd[$i][1],$cd[$i][2],1,1);
+  $natm++;
+ }
+}
+print "TER\n";
+$natm=1;
+for($i=0;$i<$cnt2;$i++){
+ if($pre[$i]==2){
+  printf("ATOM%7d  %3s %3s%2s%4d    ",$natm,"CA ","ALA"," C",$natm);
+  printf("%8.3f%8.3f%8.3f%6.2f%6.2f\n",$cd[$i][0],$cd[$i][1],$cd[$i][2],1,1);
+  $natm++;
  }
 }
 
-#Show results in PDB format
-
-print "MODEL 1\n";
+print "TER\n";
 $natm=1;
 for($i=0;$i<$cnt2;$i++){
-  printf("ATOM%7d  %3s %3s%2s%4d    ",$natm,"CA ","ALA"," A",$natm);
-  printf("%8.3f%8.3f%8.3f%6.2f%6.2f\n",$cd[$i][0],$cd[$i][1],$cd[$i][2],1,$map[$i][0]);
+ if($pre[$i]==3){
+  printf("ATOM%7d  %3s %3s%2s%4d    ",$natm,"CA ","ALA"," D",$natm);
+  printf("%8.3f%8.3f%8.3f%6.2f%6.2f\n",$cd[$i][0],$cd[$i][1],$cd[$i][2],1,1);
   $natm++;
+ }
 }
-print "TER\n";
-print "ENDMDL\n";
+
+
+
+
 
 #@key = sort { $hash{$a} <=> $hash{$b} || $a <=> $b} keys %hash;
 
@@ -117,8 +153,7 @@ my $cnt=0;
 my @A;
 open(IN,$_[0]) or die;
 while(<IN>){
-  next if(/^#/);
- 
+  next if(/^[#\/\n]/);
  chomp;
  my $item;
  @{$item}=split(/[\s\t;]+/,$_);
@@ -134,7 +169,6 @@ my @A;
 open(IN,$_[0]) or die;
 while(<IN>){
   next unless(/^#/);
-  $_=~s/^[\s]+//g;
  chomp;
  my $item;
  @{$item}=split(/[\s\t]+/,$_);
