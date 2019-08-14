@@ -13,7 +13,7 @@ Cite : Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, & Daisuke Ki
 ## Pre-required software
 
 Python 3 : https://www.python.org/downloads/  
-tensorflow : pip/conda install tensorflow==0.12  
+tensorflow : pip/conda install tensorflow
 EMAN2 : https://blake.bcm.edu/emanwiki/EMAN2/Install/  
 STRIDE : http://webclu.bio.wzw.tum.de/stride/install.html  
 Pymol{for visualiztion} : https://pymol.org/2/  
