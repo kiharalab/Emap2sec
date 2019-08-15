@@ -30,7 +30,7 @@ map2train expects sample_mrc to be a valid filename. Supported file formats are 
 Input may be gzipped. Format is deduced from FILE's extension.  
 
 <b>SAMPLE INPUTS</b>:  
-  A sample mrc file can be found in sample_IO/ folder  
+  A sample mrc file can be found in data/ folder  
     
 <b>OPTIONS:(Options marked with asterisk (*) are to be used only for benchmark purposes i.e., when you've the 
 underlying crystal structure available)</b>:  
