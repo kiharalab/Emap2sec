@@ -106,12 +106,12 @@ python data_generate/dataset.py protein_trimmap protein.stride protein_dataset p
   
 ## Emap2sec SS identification (Phase1 and Phase2)  
   Run Emap2sec program for identification of secondary structures.  
-Use run_scripts/emap2sec.py when your input is an experimental EM map.  
+Use emap2sec/emap2sec.py when your input is an experimental EM map.  
 This program requires trained models which can downloaded from here : http://dragon.bio.purdue.edu/Emap2sec_models     
 Upon download please create a models/ directory in the current working directory and add emap2sec_models_exp1/ and 	emap2sec_models_exp2/ to that directory.  
 This program is a python script and it works with both python2 and python3.  
 
-<b>python run_scripts/emap2sec.py [dataset_location_file]</b>  
+<b>python emap2sec/emap2sec.py [dataset_location_file]</b>  
 <b>INPUT:</b>  
 This program takes input as a file that contains location of input dataset.  
 It also allows you to test multiple files at a time. File locations are to be "\n" delimited.  
@@ -122,7 +122,7 @@ Sample output files are provided in the github link in Downloads tab and are nam
 and outputP2_0 for Phase2.  
 <b>USAGE:</b>  
 First run : echo [location of protein_dataset file] > dataset_location_file to save the location of your 
-protein dataset file in dataset_location_file. You can then run run_scripts/emap2sec.py as shown below.  
+protein dataset file in dataset_location_file. You can then run emap2sec/emap2sec.py as shown below.  
  
 python Emap2sec.py ../data/input_file.txt 
 
