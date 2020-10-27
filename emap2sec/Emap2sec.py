@@ -239,7 +239,7 @@ for filname in fil2:
 
 test_file_count2 = j
 fil2.close()
-filXs = open('../data/TMP_XFiles','w')
+filXs = open('data/TMP_XFiles','w')
 
 
 filXs.write(str(filnames2))
@@ -255,8 +255,8 @@ beta = tf.placeholder(tf.float32)
 
 
 sess2 = tf.Session()
-saver1 = tf.train.import_meta_graph('../data/models/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-108000.meta')
-saver1.restore(sess2,tf.train.latest_checkpoint('../data/models/emap2sec_models_exp1/'))
+saver1 = tf.train.import_meta_graph('models/emap2sec_models_exp1/emap2sec_L1_exp.ckpt-108000.meta')
+saver1.restore(sess2,tf.train.latest_checkpoint('models/emap2sec_models_exp1/'))
 
 graph = tf.get_default_graph()
 
@@ -316,7 +316,7 @@ y_test_arr2_full_old = []
 for j in range(test_file_count2):
     y_test_arr_reshape = np.reshape(y_test_arr2[j],(len(y_test_arr2[j]),1))	
     y_prob = []
-    fil1 = open('../results/outputP1_'+str(j),'w');
+    fil1 = open('outputP1_'+str(j),'w');
     fil1.write("#"+filnames2[j]+"\n")
 
     for i in range(len(y_test_arr_reshape)):
@@ -405,11 +405,11 @@ for j in range(test_file_count2):
     y_test_arr2_full.append(y_test_true)
     y_test_arr2_full_old.append(y_test_2)
     
-filX = open('../data/TMP_XFile','w')
+filX = open('data/TMP_XFile','w')
 filX.write(str(x_test_arr2_full))
 filX.close()
 
-filY = open('../data/TMP_yFile','w')
+filY = open('data/TMP_yFile','w')
 filY.write(str(y_test_arr2_full))
 filY.close()
 
@@ -418,26 +418,26 @@ filY.close()
 
 from ast import literal_eval
 
-filX=open("../data/TMP_XFile","r")
+filX=open("data/TMP_XFile","r")
 s=filX.readline()
 x_test_arr2_full=literal_eval(s)
 filX.close()
 
-filXs=open("../data/TMP_XFiles","r")
+filXs=open("data/TMP_XFiles","r")
 s=filXs.readline()
 filnames2=literal_eval(s)
 filXs.close()
 test_file_count2=len(filnames2)
 
-filX=open("../data/TMP_yFile","r")
+filX=open("data/TMP_yFile","r")
 s=filX.readline()
 y_test_arr2_full=literal_eval(s)
 filX.close()
                        
 tf.reset_default_graph()                     
 sess3 = tf.Session()
-saver = tf.train.import_meta_graph('../data/models/emap2sec_models_exp2/emap2sec_L2_exp.ckpt-20000.meta')
-saver.restore(sess3,tf.train.latest_checkpoint('../data/models/emap2sec_models_exp2/'))
+saver = tf.train.import_meta_graph('models/emap2sec_models_exp2/emap2sec_L2_exp.ckpt-20000.meta')
+saver.restore(sess3,tf.train.latest_checkpoint('data/models/emap2sec_models_exp2/'))
 
 graph = tf.get_default_graph()
 
@@ -480,7 +480,7 @@ for j in range(test_file_count2):
     y_prob2 = []
     y_prob2.append(sess3.run(tf.nn.softmax(y_conv_test2),feed_dict={x_image_test2:np.reshape(x_test_arr2_full[j],(np.shape(x_test_arr2_full[j])[0],3*3*3*4)),y_test2:y_test_arr_reshape}))
     pred_labels2 = y_pred2.eval(session=sess3,feed_dict={x_image_test2:np.reshape(x_test_arr2_full[j],(np.shape(x_test_arr2_full[j])[0],3*3*3*4)),y_test2:y_test_arr_reshape})
-    fil1 = open('../results/outputP2_'+str(j),'w');
+    fil1 = open('outputP2_'+str(j),'w');
     fil1.write("#"+filnames2[j]+"\n")
     conut=0
     for i in range(len(y_test_arr_reshape)):
