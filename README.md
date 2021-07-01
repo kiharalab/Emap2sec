@@ -9,6 +9,9 @@ Contact: Daisuke Kihara (dkihara@purdue.edu)
 
 Cite : Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, & Daisuke Kihara, Protein secondary structure detection in intermediate-resolution cryo-EM maps using deep learning. Nature Methods. (2019)
 
+## Version Updates  
+
+7/1/2021 - Unused dependencies have been removed to optimize data generation scripts
 
 ## Pre-required software
 
