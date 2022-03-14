@@ -97,7 +97,7 @@ This program is used to generate input dataset file from the trimmap file genera
 This program is a python script and it works with both python2 and python3.  
 STRIDE file is an optional input for this program. Provide it for benchmarking purposes only. If you wish to provide a STRIDE file you can run dataset.py program. Else, use dataset_wo_stride.py.    
 
-<b>python data_generate/dataset_wo_stride.py [sample_trimmap] [input_dataset_file] [ID]</b>  
+<b>python data_generate/dataset_wo_stride.py [sample_trimmap] [input_dataset_file]</b>  
 <b>python data_generate/dataset.py [sample_trimmap] [sample_stride] [input_dataset_file] [ID]</b>  
 <b>INPUTS:</b>  
 Inputs to this script are trimmap, an optional STRIDE file, and ID is a unique identifier of a map such as 
