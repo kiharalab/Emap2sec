@@ -95,16 +95,17 @@ Specify a name for output STRIDE file after -f option without space.
 ## 3) Input dataset file generation  
 This program is used to generate input dataset file from the trimmap file generated in step 1.  
 This program is a python script and it works with both python2 and python3.  
-STRIDE file is an optional input for this program. Provide it for benchmarking purposes only.  
+STRIDE file is an optional input for this program. Provide it for benchmarking purposes only. If you wish to provide a STRIDE file you can run dataset.py program. Else, use dataset_wo_stride.py.    
 
-<b>python data_generate/dataset.py [sample_trimmap] {sample_stride} [input_dataset_file] [ID]</b>  
+<b>python data_generate/dataset_wo_stride.py [sample_trimmap] [input_dataset_file] [ID]</b>  
+<b>python data_generate/dataset.py [sample_trimmap] [sample_stride] [input_dataset_file] [ID]</b>  
 <b>INPUTS:</b>  
 Inputs to this script are trimmap, an optional STRIDE file, and ID is a unique identifier of a map such as 
 SCOPe ID, EMID, etc.  
 <b>OUTPUT:</b>    
 Specify a name for input dataset file in place of [input_dataset_file].  
 <b>USAGE:</b>  
-python data_generate/dataset.py protein_trimmap protein_dataset protein_id  
+python data_generate/dataset_wo_stride.py protein_trimmap protein_dataset protein_id  
 python data_generate/dataset.py protein_trimmap protein.stride protein_dataset protein_id  
   
 ## Emap2sec SS identification (Phase1 and Phase2)  
