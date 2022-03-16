@@ -37,6 +37,7 @@ trimmap='data/trimmap'
 dataset='data/dataset'
 output='results/outputP2_0'
 visual_output='results/visual.pdb'
+tmp_files_pattern='data/TMP_*'
 
 #Code
 cd map2train_src
@@ -50,5 +51,6 @@ python emap2sec/Emap2sec.py "$filename"
 echo "INFO : Running Visual.pl"
 Visual/Visual.pl "$trimmap" "$output" -p > "$visual_output"
 cp map2train_src/bin/map2train results/
+rm -rf $tmp_files_pattern
 echo "INFO : Done"
 
