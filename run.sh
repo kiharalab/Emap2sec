@@ -23,34 +23,61 @@ chmod -R 777 data/
 chmod -R 777 map2train_src/
 chmod -R 777 Visual/
 
-# Create results folder if does not exist
-mkdir -p results
+#Folders
+data_folder="data/"
+result_folder="results/"
+models_folder="models/"
 
 #Inputs
-map='data/1733.mrc'
-contour_level=2.5
-
+default_map="${data_folder}1733.mrc"
+default_contour_level=2.5
 
 #Vars
-filename='data/input_file.txt'
-trimmap='data/trimmap'
-dataset='data/dataset'
-output='results/outputP2_0'
-visual_output='results/visual.pdb'
-tmp_files_pattern='data/TMP_*'
+input_filename="${data_folder}input_file.txt"
+trimmap="${data_folder}trimmap"
+dataset="${data_folder}protein_dataset"
+output_1="outputP1_0"
+output_2="outputP2_0"
+visual_output_1="${result_folder}visual_1.pdb"
+visual_output_2="${result_folder}visual_2.pdb"
+tmp_files_patern="${data_folder}TMP_*"
 
 #Code
+# Checking number of arguments
+if [ "$#" -gt 2 ]; then
+    echo "ERROR: Wrong number of parameters"
+    echo "USAGE:"
+    echo "	default (1733.mrc and contour_level 2.5):	./run.sh"
+    echo "	custom .mrc:					./run.sh path_to_your_file.mrc"
+    echo "	custom .mrc and contour level:			./run.sh path_to_your_file.mrc contour_level"
+    exit
+fi
+
+# Getting mrc file and countour from arguments. If they are not provided, defaut values are taken
+map="${1:-$default_map}"
+contour_level="${2:-$default_contour_level}"
+
+# Exit execution if models are not present
+if [ ! -d "$models_folder" ]; then
+  echo "Folder \"${models_folder}\" not found in project."
+  echo "Please, download trained models from https://kiharalab.org/Emap2sec_models/"
+  exit
+fi
+
+mkdir -p $result_folder
 cd map2train_src
 make
 cd -
 map2train_src/bin/map2train $map -c $contour_level >  $trimmap 
 python data_generate/dataset_wo_stride.py $trimmap $dataset
-echo $dataset > $filename
-echo "INFO : Running Emap2sec.py with arguments $filename"
-python emap2sec/Emap2sec.py "$filename"
+echo $dataset > $input_filename
+echo "INFO : Running Emap2sec.py with arguments ${dataset}"
+python emap2sec/Emap2sec.py $input_filename
+mv $output1 $result_folder 2>/dev/null
+mv $output2 $result_folder 2>/dev/null
 echo "INFO : Running Visual.pl"
-Visual/Visual.pl "$trimmap" "$output" -p > "$visual_output"
-cp map2train_src/bin/map2train results/
-rm -rf $tmp_files_pattern
+Visual/Visual.pl $trimmap $result_folder$output_1 -p > $visual_output_1
+Visual/Visual.pl $trimmap $result_folder$output_2 -p > $visual_output_2
+echo "INFO : Cleaning up"
+rm -rf $tmp_files_patern $input_filename $trimapp $dataset
 echo "INFO : Done"
-
