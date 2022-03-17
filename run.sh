@@ -73,8 +73,8 @@ python data_generate/dataset_wo_stride.py $trimmap $dataset
 echo $dataset > $input_filename
 echo "INFO : Running Emap2sec.py with arguments ${dataset}"
 python emap2sec/Emap2sec.py $input_filename
-mv $output1 $result_folder 2>/dev/null
-mv $output2 $result_folder 2>/dev/null
+mv $output_1 $result_folder 2>/dev/null
+mv $output_2 $result_folder 2>/dev/null
 echo "INFO : Running Visual.pl"
 Visual/Visual.pl $trimmap $result_folder$output_1 -p > $visual_output_1
 Visual/Visual.pl $trimmap $result_folder$output_2 -p > $visual_output_2
