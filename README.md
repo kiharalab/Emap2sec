@@ -77,7 +77,7 @@ default=false
 -h, --help, -?, /? Displays the list of above options.  
   
 <b>USAGE:</b>  
-./map2train ../data/1733.mrc -c 2.75 > ../data/trimmap
+./map2train_src/bin/map2train data/1733.mrc -c 2.75 > data/trimmap
 
 
 ## 2) [OPTIONAL] STRIDE File generation  
@@ -147,8 +147,8 @@ A sample output file is provided in the github link in Downloads tab.
 information available]  
 
 <b>USAGE:</b>  
-visual/Visual.pl protein_trimmap outputP1_0 -p > out_fin1.pdb  
-visual/Visual.pl protein_trimmap outputP2_0 -p > out_fin2.pdb  
+Visual/Visual.pl protein_trimmap outputP1_0 -p > out_fin1.pdb  
+Visual/Visual.pl protein_trimmap outputP2_0 -p > out_fin2.pdb  
 
 Upon pymol installation, from pymol download directory you can run the below code from command line,  
 <b>pymol out_fin2.pdb</b>  
