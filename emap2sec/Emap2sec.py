@@ -437,7 +437,7 @@ filX.close()
 tf.reset_default_graph()                     
 sess3 = tf.Session()
 saver = tf.train.import_meta_graph('models/emap2sec_models_exp2/emap2sec_L2_exp.ckpt-20000.meta')
-saver.restore(sess3,tf.train.latest_checkpoint('data/models/emap2sec_models_exp2/'))
+saver.restore(sess3,tf.train.latest_checkpoint('models/emap2sec_models_exp2/'))
 
 graph = tf.get_default_graph()
 
