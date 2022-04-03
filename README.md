@@ -15,8 +15,11 @@ Cite : Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, & Daisuke Ki
 
 ## Pre-required software
 
-Python 3 : https://www.python.org/downloads/  
-tensorflow : pip/conda install tensorflow  
+Python 3.6 : https://www.python.org/downloads/  
+tensorflow 1.15 : pip/conda install tensorflow==1.15
+scikit-learn 0.24.2 : pip/conda install scikit-learn==0.24.2
+pandas 1.1.5 : pip/conda install pandas==1.1.5
+numpy 1.16.4 : pip/conda install numpy==1.16.4
 EMAN2 : https://blake.bcm.edu/emanwiki/EMAN2/Install/  
 STRIDE : http://webclu.bio.wzw.tum.de/stride/install.html  
 Pymol{for visualiztion} : https://pymol.org/2/  
