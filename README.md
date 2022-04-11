@@ -59,7 +59,7 @@ default=3.0
 We recommend using a value of 2 that slides the cube by 2Å in each direction.   
 Decreasing this value to 1 produces 8 times more data (increase by a factor of 2 in each direction)   
 and thus slows the running time down by 8 times so please be mindful lowering this value.  
-default=2  
+default=4  
 
 -vw [integer] This option sets the dimensions of sliding cube used for input data generation.  
 The size of the cube is calculated as 2*vw+1.  
