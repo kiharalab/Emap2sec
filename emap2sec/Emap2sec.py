@@ -182,12 +182,22 @@ def read_records2(filename,batch_size,num_epochs):
     return example_batch2,label_batch2
 
 def display_help(custom_error):
+    """ Displays usage help. """
     print("ERROR - " + custom_error + ".")
     print("HELP:\n\tPARAMETERS:")
     print("\t\tInput file: Path to input file that defines the path for the dataset.")
     print("\t\t--prefix, Output file name prefix (optional): File name prefix for output files. Useful to include the path or to differentiate between different executions using the same filenames as input. Default: outputP1_<mrc filename> and outputP2_<mrc filename>.")
     print("\tEXAMPLE: python Emap2sec.py myinputfile.txt --prefix outputfilename")
 
+def remove_file_silent(file):
+    """
+    Tries to remove a file.
+    If an exception is thrown (if access is denied of files does not exist), it does not show such error.
+    """
+    try:
+        os.remove(file)
+    except:
+        pass
 # In[3]:
 
 y_test_arr = []
@@ -231,6 +241,12 @@ if (output_param in sys.argv):
 # Generating filenames for phase 1 and 2
 first_output_prefix = output_prefix + "outputP1_" if output_prefix else "outputP1_"
 second_output_prefix = output_prefix + "outputP2_" if output_prefix else "outputP2_"
+
+# Adding prefix for tmp files
+tmp_input_prefix = output_prefix.replace('/', '_').replace('~', '') + '_' if output_prefix else '_'
+if tmp_input_prefix[0] == '_':
+    tmp_input_prefix = tmp_input_prefix[1:]
+tmp_prefix = 'data/' + tmp_input_prefix + 'TMP_'
 
 input_location_file = os.path.join(sys.argv[1])
 fil2 = open(input_location_file,'r')
@@ -278,8 +294,8 @@ for filname in fil2:
 
 test_file_count2 = j
 fil2.close()
-filXs = open('data/TMP_XFiles','w')
-
+filXs = open(tmp_prefix+'XFiles','w')
+filXs = open(tmp_prefix+'XFiles','w')
 
 filXs.write(str(filnames2))
 filXs.close()
@@ -355,7 +371,7 @@ y_test_arr2_full_old = []
 for j in range(test_file_count2):
     y_test_arr_reshape = np.reshape(y_test_arr2[j],(len(y_test_arr2[j]),1))	
     y_prob = []
-    fil1 = open(first_output_prefix+input_files_basename[j],'w');
+    fil1 = open(first_output_prefix+input_files_basename[j],'w')
     fil1.write("#"+filnames2[j]+"\n")
 
     for i in range(len(y_test_arr_reshape)):
@@ -376,7 +392,7 @@ for j in range(test_file_count2):
         pred_labels = y_pred.eval(session=sess2,feed_dict={x_test:x_test_arr2[j][ind:sInd],y_test:y_test_arr_reshape[ind:sInd]})
         for i in range(len(pred_labels)):
             cum_pred_labels.append(pred_labels[i])
-            fil1.write(str(pred_labels[i]));
+            fil1.write(str(pred_labels[i]))
             fil1.write(';')
 
     fil1.write("\n")
@@ -444,11 +460,11 @@ for j in range(test_file_count2):
     y_test_arr2_full.append(y_test_true)
     y_test_arr2_full_old.append(y_test_2)
     
-filX = open('data/TMP_XFile','w')
+filX = open(tmp_prefix+'XFile','w')
 filX.write(str(x_test_arr2_full))
 filX.close()
 
-filY = open('data/TMP_yFile','w')
+filY = open(tmp_prefix+'yFile','w')
 filY.write(str(y_test_arr2_full))
 filY.close()
 
@@ -457,18 +473,18 @@ filY.close()
 
 from ast import literal_eval
 
-filX=open("data/TMP_XFile","r")
+filX=open(tmp_prefix+"XFile","r")
 s=filX.readline()
 x_test_arr2_full=literal_eval(s)
 filX.close()
 
-filXs=open("data/TMP_XFiles","r")
+filXs=open(tmp_prefix+"XFiles","r")
 s=filXs.readline()
 filnames2=literal_eval(s)
 filXs.close()
 test_file_count2=len(filnames2)
 
-filX=open("data/TMP_yFile","r")
+filX=open(tmp_prefix+"yFile","r")
 s=filX.readline()
 y_test_arr2_full=literal_eval(s)
 filX.close()
@@ -519,20 +535,20 @@ for j in range(test_file_count2):
     y_prob2 = []
     y_prob2.append(sess3.run(tf.nn.softmax(y_conv_test2),feed_dict={x_image_test2:np.reshape(x_test_arr2_full[j],(np.shape(x_test_arr2_full[j])[0],3*3*3*4)),y_test2:y_test_arr_reshape}))
     pred_labels2 = y_pred2.eval(session=sess3,feed_dict={x_image_test2:np.reshape(x_test_arr2_full[j],(np.shape(x_test_arr2_full[j])[0],3*3*3*4)),y_test2:y_test_arr_reshape})
-    fil1 = open(second_output_prefix+input_files_basename[j],'w');
+    fil1 = open(second_output_prefix+input_files_basename[j],'w')
     fil1.write("#"+filnames2[j]+"\n")
     conut=0
     for i in range(len(y_test_arr_reshape)):
         if(y_test_arr_reshape[i][0]==1):
             conut+=1
-        fil1.write(str(y_test_arr_reshape[i][0]));
-        fil1.write(';');
+        fil1.write(str(y_test_arr_reshape[i][0]))
+        fil1.write(';')
     fil1.write('\n')
     for i in range(len(pred_labels2)):
         if((int(y_test_arr_reshape_old[i])==2 and int(pred_labels2[i])==0) or (int(y_test_arr_reshape_old[i])==1 and int(pred_labels2[i])==0)):
             pred_labels2[i]=y_test_arr_reshape_old[i]
-        fil1.write(str(pred_labels2[i]));
-        fil1.write(';');
+        fil1.write(str(pred_labels2[i]))
+        fil1.write(';')
 
     fil1.write("\n")
 
@@ -543,8 +559,7 @@ for j in range(test_file_count2):
     fil1.close()
     print("INFO : Wrote the output of Phase2 to "+second_output_prefix+input_files_basename[j])
 
-
-# In[ ]:
-
-
-
+# Deleting tmp files
+remove_file_silent(tmp_prefix+'XFiles')
+remove_file_silent(tmp_prefix+'XFile')
+remove_file_silent(tmp_prefix+'yFile')
