@@ -56,8 +56,8 @@ These true labels can be compared to the secondary structures assigned by Emap2s
 default=3.0  
 
 -sstep [integer] This option sets the stride size of the sliding cube used for input data generation.  
-We recommend using a value of 2 that slides the cube by 2Å in each direction.   
-Decreasing this value to 1 produces 8 times more data (increase by a factor of 2 in each direction)   
+We recommend using a value of 4 that slides the cube by 4Å in each direction.   
+Decreasing this value by 1 produces 8 times more data (increase by a factor of 2 in each direction)   
 and thus slows the running time down by 8 times so please be mindful lowering this value.  
 default=4  
 
