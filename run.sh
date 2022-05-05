@@ -38,7 +38,7 @@ contour_level="${2:-$default_contour_level}"
 
 #Vars
 input_filename="${data_folder}input_file.txt"
-trimapp="${data_folder}trimapp"
+trimmap="${data_folder}trimmap"
 dataset_basename="proteinDataset"
 dataset="${data_folder}${dataset_basename}"
 output_1="outputP1_${dataset_basename}"
@@ -69,14 +69,14 @@ mkdir -p $result_folder
 cd map2train_src
 make
 cd -
-map2train_src/bin/map2train $map -c $contour_level >  $trimapp 
-python data_generate/dataset_wo_stride.py $trimapp $dataset
+map2train_src/bin/map2train $map -c $contour_level >  $trimmap 
+python data_generate/dataset_wo_stride.py $trimmap $dataset
 echo $dataset > $input_filename
 echo "INFO : Running Emap2sec.py with arguments ${dataset}"
 python emap2sec/Emap2sec.py $input_filename --prefix $result_folder
 echo "INFO : Running Visual.pl"
-Visual/Visual.pl $trimapp $result_folder$output_1 -p > $visual_output_1
-Visual/Visual.pl $trimapp $result_folder$output_2 -p > $visual_output_2
+Visual/Visual.pl $trimmap $result_folder$output_1 -p > $visual_output_1
+Visual/Visual.pl $trimmap $result_folder$output_2 -p > $visual_output_2
 echo "INFO : Cleaning up"
-rm -rf $tmp_files_patern $input_filename $trimapp $dataset
+rm -rf $tmp_files_patern $input_filename $trimmap $dataset
 echo "INFO : Done"
