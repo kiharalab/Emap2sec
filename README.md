@@ -127,7 +127,8 @@ It also allows you to test multiple files at a time. File locations are to be "\
 This program writes two output files, one for each phase, which contain output predictions along with 
 the probability value for each prediction.  
 Sample output files are provided in the github link in Downloads tab and are named as outputP1_0 for Phase1
-and outputP2_0 for Phase2. 
+and outputP2_0 for Phase2.  
+Only the output of Phase2 is needed for the visualization step.  
 <b>OPTIONS:</b>  
 --prefix : File name prefix for output files [OPTIONAL]. Useful to include the output file path or to differentiate between several parallel executions using the same files as input without them overwriting other's results. This is useful because a process that has already created the result file and ties to read it might interfere with another process overwriting that file at the same time. Default: outputP1_<dataset_filename> and outputP2_<dataset_filename>."  
 <b>USAGE:</b>  
@@ -162,11 +163,10 @@ A sample output file is provided in the github link in Downloads tab.
 information available]  
 
 <b>USAGE:</b>  
-Visual/Visual.pl protein_trimmap outputP1_protein_dataset -p > out_fin1.pdb  
-Visual/Visual.pl protein_trimmap outputP2_protein_dataset -p > out_fin2.pdb  
+Visual/Visual.pl protein_trimmap outputP2_protein_dataset -p > out_fin.pdb  
 
 Upon pymol installation, from pymol download directory you can run the below code from command line,  
-<b>pymol out_fin2.pdb</b>  
+<b>pymol out_fin.pdb</b>  
 or
 Open Pymol GUI and load visual.pdb.
 
