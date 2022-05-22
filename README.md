@@ -108,9 +108,9 @@ SCOPe ID, EMID, etc.
 <b>OUTPUT:</b>    
 Specify a name for input dataset file in place of [input_dataset_file].  
 <b>USAGE:</b>  
-python data_generate/dataset_wo_stride.py protein_trimmap protein_dataset protein_id  
+python data_generate/dataset_wo_stride.py data/trimmap data/protein_dataset protein_id  
 or  
-python data_generate/dataset.py protein_trimmap protein.stride protein_dataset protein_id  
+python data_generate/dataset.py data/trimmap protein.stride data/protein_dataset protein_id  
   
 ## Emap2sec SS identification (Phase1 and Phase2)  
   Run Emap2sec program for identification of secondary structures.  
@@ -136,9 +136,9 @@ First run : echo [location of protein_dataset file] > dataset_location_file to s
 protein dataset file in dataset_location_file. You can write the location for a different dataset input file for each line of the dataset_location_file and they will be processed in batch with the same Emap2sec.py's execution.
 You can then run emap2sec/Emap2sec.py as shown below.  
 
-echo protein_dataset > dataset_location_file  
+echo data/protein_dataset > dataset_location_file  
 or  
-echo $'protein_dataset_1\nprotein_dataset_2\nprotein_dataset_3' > dataset_location_file  
+echo $'data/protein_dataset_1\ndata/protein_dataset_2\ndata/protein_dataset_3' > dataset_location_file  
 
 and then  
  
@@ -163,7 +163,7 @@ A sample output file is provided in the github link in Downloads tab.
 information available]  
 
 <b>USAGE:</b>  
-Visual/Visual.pl protein_trimmap outputP2_protein_dataset -p > out_fin.pdb  
+Visual/Visual.pl data/trimmap outputP2_protein_dataset -p > out_fin.pdb  
 
 Upon pymol installation, from pymol download directory you can run the below code from command line,  
 <b>pymol out_fin.pdb</b>  
