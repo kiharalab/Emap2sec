@@ -1,4 +1,10 @@
 # Emap2sec
+
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/50850224/192007403-f0e42715-e79d-4f37-9456-5f4e4b2f1882.jpeg" width="300">
+</p>
+
 Emap2sec is a computational tool using deep learning that can accurately identify protein secondary structures, alpha helices, beta sheets, others (coils/turns), in cryo-Electron Microscopy (EM) maps of medium to low resolution.
 
 Copyright (C) 2018 Sai Raghavendra Maddhuri, Genki Terashi, Daisuke Kihara, and Purdue University.
