@@ -119,9 +119,9 @@ SCOPe ID, EMID, etc.
 <b>OUTPUT:</b>    
 Specify a name for input dataset file in place of [input_dataset_file].  
 <b>USAGE:</b>  
-python data_generate/dataset_wo_stride.py protein_trimmap protein_dataset protein_id  
+python data_generate/dataset_wo_stride.py data/trimmap data/protein_dataset protein_id  
 or  
-python data_generate/dataset.py protein_trimmap protein.stride protein_dataset protein_id  
+python data_generate/dataset.py data/trimmap protein.stride data/protein_dataset protein_id  
   
 ## Emap2sec SS identification (Phase1 and Phase2)  
   Run Emap2sec program for identification of secondary structures.  
@@ -138,7 +138,8 @@ It also allows you to test multiple files at a time. File locations are to be "\
 This program writes two output files, one for each phase, which contain output predictions along with 
 the probability value for each prediction.  
 Sample output files are provided in the github link in Downloads tab and are named as outputP1_0 for Phase1
-and outputP2_0 for Phase2. 
+and outputP2_0 for Phase2.  
+Only the output of Phase2 is needed for the visualization step.  
 <b>OPTIONS:</b>  
 --prefix : File name prefix for output files [OPTIONAL]. Useful to include the output file path or to differentiate between several parallel executions using the same files as input without them overwriting other's results. This is useful because a process that has already created the result file and ties to read it might interfere with another process overwriting that file at the same time. Default: outputP1_<dataset_filename> and outputP2_<dataset_filename>."  
 <b>USAGE:</b>  
@@ -146,9 +147,9 @@ First run : echo [location of protein_dataset file] > dataset_location_file to s
 protein dataset file in dataset_location_file. You can write the location for a different dataset input file for each line of the dataset_location_file and they will be processed in batch with the same Emap2sec.py's execution.
 You can then run emap2sec/Emap2sec.py as shown below.  
 
-echo protein_dataset > dataset_location_file  
+echo data/protein_dataset > dataset_location_file  
 or  
-echo $'protein_dataset_1\nprotein_dataset_2\nprotein_dataset_3' > dataset_location_file  
+echo $'data/protein_dataset_1\ndata/protein_dataset_2\ndata/protein_dataset_3' > dataset_location_file  
 
 and then  
  
@@ -173,11 +174,10 @@ A sample output file is provided in the github link in Downloads tab.
 information available]  
 
 <b>USAGE:</b>  
-Visual/Visual.pl protein_trimmap outputP1_protein_dataset -p > out_fin1.pdb  
-Visual/Visual.pl protein_trimmap outputP2_protein_dataset -p > out_fin2.pdb  
+Visual/Visual.pl data/trimmap outputP2_protein_dataset -p > out_fin.pdb  
 
 Upon pymol installation, from pymol download directory you can run the below code from command line,  
-<b>pymol out_fin2.pdb</b>  
+<b>pymol out_fin.pdb</b>  
 or
 Open Pymol GUI and load visual.pdb.
 
