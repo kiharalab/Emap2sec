@@ -1,5 +1,3 @@
-#Run Inst.s
-
 # Copyright (C) 2018 Sai Raghavendra Maddhuri, Genki Terashi, Daisuke Kihara, and Purdue University.
 # This file is a part of Emap2sec package with -
 # Reference:  Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, and Daisuke Kihara. Protein Secondary Structure Detection in Intermediate Resolution Cryo-Electron Microscopy Maps Using Deep Learning. Nature Methods (2019).
@@ -10,64 +8,68 @@
 # the Free Software Foundation, version 3.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# but WITHOUT ANY WARRANTY without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License V3 for more details.
 #
 # You should have received a copy of the GNU v3.0 General Public License
 # along with this program.  If not, see https://www.gnu.org/licenses/gpl-3.0.en.html.
 
+import sys, os
 
-import sys
-import numpy as np
+# Auxiliar functions
+def getFilePath(rawPath):
+    """
+    This function parses a given path.
+    """
+    absPath = os.path.expanduser(rawPath) if "~" in rawPath else rawPath
+    return os.path.abspath(absPath)
 
-dataFile = sys.argv[1];
-outputFile = sys.argv[2];
-factor=4
-fil1 = open(dataFile);
-fil3 = open(outputFile,'w');    
-lines1 = fil1.readlines();
+def readFile(filePath):
+    """
+    This function returns the content of a file.
+    Raises an exception if there were any problems reading it.
+    """
+    try:
+        file = open(getFilePath(filePath), "r")
+        content = file.readlines()
+        file.close()
+        return content
+    except Exception as e:
+        raise Exception("There was an error opening file {}.\n{}".format(filePath, e))
 
-j=0;
+# Getting params
+dataFilePath = sys.argv[1]
+outputFilePath = sys.argv[2]
 
+# Reading input files
+dataFileLines = readFile(dataFilePath)
 
-count=0
-coords=[]
-for line in lines1:
-    if(line.rstrip()==''):
-        continue
-    elif(line.startswith("-2") or line.startswith('#C: Res= -2')):
-        continue   
-    elif(line.startswith('#C:')):
-        equ = line.split('=')
-        coords = equ[len(equ)-1].split(' ')[1:4]
-        continue
- 
- 
-    if(line.startswith("-1")):
-        fil3.write(str(int(int(coords[0])/factor))+","+str(int(int(coords[1])/factor))+","+str(int(int(coords[2].rstrip())/factor))+','+line)
-        continue    
+# Opening output file
+outputFile = open(getFilePath(outputFilePath), "w")
 
-    elif(line.startswith('#Base') or line.startswith('#Steps')):
-        continue    
+# Writing dataset file into output path
+factor = 4
+coords = []
+for line in dataFileLines:
+    if(line.rstrip() != "" and not line.startswith("-2") and not line.startswith("#C: Res= -2")
+        and not line.startswith("#Base") and not line.startswith("#Steps") and not line.startswith("#dmax")):
 
-    elif(line.startswith("#Voxel")):
-        fil3.write(line.split()[2]+","+line.split()[3]+","+line.split()[4])
-        fil3.write('\n')
-        continue
-    elif(line.startswith("#dmax")):
-        continue    
+        if(line.startswith("#C:")):
+            equ = line.split("=")
+            coords = equ[len(equ) - 1].split(" ")[1:4]
 
-    li = line.split(',');
-    flag=0;
-    #print(len(labelArray1))
-    for i in li:
-        if(flag==0):
-            label = "0"
-            fil3.write(str(int(int(coords[0])/factor))+","+str(int(int(coords[1])/factor))+","+str(int(int(coords[2].rstrip())/factor))+',')
-            fil3.write(label)
-            flag=1;
+        elif(line.startswith("-1")):
+            outputFile.write(str(int(int(coords[0]) / factor)) + "," + str(int(int(coords[1]) / factor)) + "," + str(int(int(coords[2].rstrip()) / factor)) + "," + line)
+
+        elif(line.startswith("#Voxel")):
+            outputFile.write(line.split()[2] + "," + line.split()[3] + "," + line.split()[4] + "\n")
+
         else:
-            fil3.write(',');
-            fil3.write(i);
-    count+=1
+            li = line.split(",")
+            outputFile.write(str(int(int(coords[0]) / factor)) + "," + str(int(int(coords[1]) / factor)) + "," + str(int(int(coords[2].rstrip()) / factor)) + ",0")
+            for i in li[1:]:
+                outputFile.write("," + i)
+
+# Closing output file
+outputFile.close()

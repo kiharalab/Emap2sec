@@ -1,0 +1,8 @@
+__pycache__/
+models/
+*trimmap*
+*dataset*
+results/
+map2train
+map2train_debug
+*.o

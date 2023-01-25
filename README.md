@@ -27,19 +27,18 @@ Cite : Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, & Daisuke Ki
 ## Pre-required software
 
 Python 3.6 : https://www.python.org/downloads/  
-tensorflow 1.15 : pip/conda install tensorflow==1.15
-scikit-learn 0.24.2 : pip/conda install scikit-learn==0.24.2
-pandas 1.1.5 : pip/conda install pandas==1.1.5
-numpy 1.16.4 : pip/conda install numpy==1.16.4
+tensorflow 1.15 : pip/conda install tensorflow==1.15  
+scikit-learn 0.24.2 : pip/conda install scikit-learn==0.24.2  
+pandas 1.1.5 : pip/conda install pandas==1.1.5  
+numpy 1.16.4 : pip/conda install numpy==1.16.4  
 EMAN2 : https://blake.bcm.edu/emanwiki/EMAN2/Install/  
-STRIDE : http://webclu.bio.wzw.tum.de/stride/install.html  
-Pymol{for visualiztion} : https://pymol.org/2/  
+Pymol (optional, for visualiztion) : https://pymol.org/2/  
 
 
 ## Input file generation  
 Generate the input file called [your_map_id]_dataset from your map file by following these 3 steps.  
 
-  ## 1) Trimmap generation  
+  ### 1) Trimmap generation  
 
 <b>data_generate/map2train [sample_mrc] [options] > [output_trimmap_filename]</b>  
 <b>INPUTS</b>:  
@@ -91,37 +90,21 @@ default=false
 -h, --help, -?, /? Displays the list of above options.  
   
 <b>USAGE:</b>  
-./map2train_src/bin/map2train data/1733.mrc -c 2.75 > data/trimmap
+./data_generate/map2train data/1733.mrc -c 2.75 > data/trimmap
 
-
-## 2) [OPTIONAL] STRIDE File generation  
-Use this step to generate STRIDE file in case you have a solved crystal structure for your map. This step is for verification purposes only.  
-STRIDE is a secondary structure assignment program that takes a PDB file as input.  
-
-<b>./stride -f[output_stride_filename] [sample_pdb]</b>   
-<b>INPUT:</b>  
-Specify the name of your pdb file in place of [sample_pdb].  
-<b>OUTPUT:</b>    
-Specify a name for output STRIDE file after -f option without space.  
-<b>USAGE:</b>  
-./stride -fprotein.stride protein.pdb  
-
-## 3) Input dataset file generation  
+### 2) Input dataset file generation  
 This program is used to generate input dataset file from the trimmap file generated in step 1.  
-This program is a python script and it works with both python2 and python3.  
-STRIDE file is an optional input for this program. Provide it for benchmarking purposes only. If you wish to provide a STRIDE file you can run dataset.py program. Else, use dataset_wo_stride.py.    
+This program is a python script and it works with both python2 and python3.    
 
-<b>python data_generate/dataset_wo_stride.py [sample_trimmap] [input_dataset_file]</b>  
-<b>python data_generate/dataset.py [sample_trimmap] [sample_stride] [input_dataset_file] [ID]</b>  
+<b>python data_generate/dataset.py [sample_trimmap] [output_dataset_file]</b>  
 <b>INPUTS:</b>  
-Inputs to this script are trimmap, an optional STRIDE file, and ID is a unique identifier of a map such as 
-SCOPe ID, EMID, etc.  
-<b>OUTPUT:</b>    
-Specify a name for input dataset file in place of [input_dataset_file].  
+Trimmap file.  
+
+<b>OUTPUT:</b>  
+Specify a name for input dataset file in place of [output_dataset_file].  
+
 <b>USAGE:</b>  
-python data_generate/dataset_wo_stride.py data/trimmap data/protein_dataset protein_id  
-or  
-python data_generate/dataset.py data/trimmap protein.stride data/protein_dataset protein_id  
+python data_generate/dataset.py data/trimmap data/protein_dataset  
   
 ## Emap2sec SS identification (Phase1 and Phase2)  
   Run Emap2sec program for identification of secondary structures.  
@@ -134,14 +117,17 @@ This program is a python script and it works with both python2 and python3.
 <b>INPUT:</b>  
 This program takes input as a file that contains location of input dataset.  
 It also allows you to test multiple files at a time. File locations are to be "\n" delimited.  
+
 <b>OUTPUT:</b>  
 This program writes two output files, one for each phase, which contain output predictions along with 
 the probability value for each prediction.  
 Sample output files are provided in the github link in Downloads tab and are named as outputP1_0 for Phase1
 and outputP2_0 for Phase2.  
 Only the output of Phase2 is needed for the visualization step.  
+
 <b>OPTIONS:</b>  
 --prefix : File name prefix for output files [OPTIONAL]. Useful to include the output file path or to differentiate between several parallel executions using the same files as input without them overwriting other's results. This is useful because a process that has already created the result file and ties to read it might interfere with another process overwriting that file at the same time. Default: outputP1_<dataset_filename> and outputP2_<dataset_filename>."  
+
 <b>USAGE:</b>  
 First run : echo [location of protein_dataset file] > dataset_location_file to save the location of your 
 protein dataset file in dataset_location_file. You can write the location for a different dataset input file for each line of the dataset_location_file and they will be processed in batch with the same Emap2sec.py's execution.
@@ -165,9 +151,11 @@ python emap2sec/Emap2sec.py dataset_location_file --prefix results/
 This program takes as inputs, the trimmap file generated in step 1 of input file generation
 and output file of Emap2sec SS identification.  
 You can visualize Phase1 or Phase2 output by using the appropriate output file.  
+
 <b>OUTPUT:</b>  
 This program outputs a pdb file that contains secondary structure assignments.  
 A sample output file is provided in the github link in Downloads tab.   
+
 <b>OPTIONS:</b>  
 -p : Show predicted data (Predicted secondary structures)  
 -n : Show native data (True secondary structures)[OPTIONAL - Use in case you've the crystal structure
