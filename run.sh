@@ -43,7 +43,6 @@ dataset_basename="proteinDataset"
 dataset="${data_folder}${dataset_basename}"
 output_1="outputP1_${dataset_basename}"
 output_2="outputP2_${dataset_basename}"
-visual_output_1="${result_folder}visual_1.pdb"
 visual_output_2="${result_folder}visual_2.pdb"
 tmp_files_patern="${data_folder}TMP_*"
 
@@ -69,14 +68,13 @@ mkdir -p $result_folder
 cd map2train_src
 make
 cd -
-map2train_src/bin/map2train $map -c $contour_level >  $trimmap 
-python data_generate/dataset_wo_stride.py $trimmap $dataset
+data_generate/map2train $map -c $contour_level >  $trimmap 
+python data_generate/dataset.py $trimmap $dataset
 echo $dataset > $input_filename
 echo "INFO : Running Emap2sec.py with arguments ${dataset}"
 python emap2sec/Emap2sec.py $input_filename --prefix $result_folder
 echo "INFO : Running Visual.pl"
-Visual/Visual.pl $trimmap $result_folder$output_1 -p > $visual_output_1
 Visual/Visual.pl $trimmap $result_folder$output_2 -p > $visual_output_2
 echo "INFO : Cleaning up"
-rm -rf $tmp_files_patern $input_filename $trimmap $dataset
+rm -rf $tmp_files_patern $input_filename $trimmap $dataset $output_1
 echo "INFO : Done"
