@@ -1,9 +1,7 @@
-
 # GCC 4.8+ assumed
 
 SRC_DIR	= .
 BIN_DIR = bin
-
 CXX		= g++
 XFLAGS	= -std=c++11 -march=native -Wall -fopenmp
 LFLAGS	= -Lgzstream -lgzstream -lz
@@ -19,25 +17,11 @@ all:	map2train
 map2train:	main.cpp Grid.hpp
 	cd gzstream; make
 	mkdir -p $(BIN_DIR)
-	$(CXX)  	main.cpp -o $(BIN_DIR)/map2train $(OPTIM) $(XFLAGS) $(LFLAGS) 
-	$(CXX) -g -pg  main.cpp -o $(BIN_DIR)/map2train_debug $(XFLAGS) $(LFLAGS) 
+	$(CXX)  	main.cpp -o $(BIN_DIR)/map2train $(OPTIM) $(XFLAGS) $(LFLAGS)
+	$(CXX) -g -pg  main.cpp -o $(BIN_DIR)/map2train_debug $(XFLAGS) $(LFLAGS)
+	mv bin/map2train ../data_generate/
 
 clean:
 	rm -f $(OBJ_FILES)
 	rm -rf $(BIN_DIR)
 	cd gzstream; make cleanall
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
