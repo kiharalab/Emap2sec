@@ -17,8 +17,9 @@ Cite : Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, & Daisuke Ki
 
 ## Online Platform
 **All the functions in this github are available here. Related instructions are included in the website.**
-### 1. Colab: https://bit.ly/emap2sec  or https://github.com/kiharalab/Emap2sec/blob/master/Emap2sec.ipynb
-### 2. CodeOcean: https://codeocean.com/capsule/4439990/tree/v1
+### 1. Server: https://em.kiharalab.org/algorithm/emap2sec
+### 2. Colab: https://bit.ly/emap2sec  or https://github.com/kiharalab/Emap2sec/blob/master/Emap2sec.ipynb
+### 3. CodeOcean: https://codeocean.com/capsule/4439990
 
 ## Version Updates  
 
