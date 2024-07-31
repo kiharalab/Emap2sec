@@ -27,14 +27,14 @@ Cite : Sai Raghavendra Maddhuri Venkata Subramaniya, Genki Terashi, & Daisuke Ki
 
 ## Pre-required software
 
-Python 3.6 : https://www.python.org/downloads/  
-tensorflow 1.15 : pip/conda install tensorflow==1.15  
-scikit-learn 0.24.2 : pip/conda install scikit-learn==0.24.2  
-pandas 1.1.5 : pip/conda install pandas==1.1.5  
-numpy 1.16.4 : pip/conda install numpy==1.16.4
-gcc 4.8+
-EMAN2 : https://blake.bcm.edu/emanwiki/EMAN2/Install/
-Pymol (optional, for visualiztion) : https://pymol.org/2/  
+- Python 3.6 : https://www.python.org/downloads/
+- tensorflow 1.15 : pip/conda install tensorflow==1.15
+- scikit-learn 0.24.2 : pip/conda install scikit-learn==0.24.2  
+- pandas 1.1.5 : pip/conda install pandas==1.1.5  
+- numpy 1.16.4 : pip/conda install numpy==1.16.4
+- gcc 4.8+
+- EMAN2 : https://blake.bcm.edu/emanwiki/EMAN2/Install/
+- Pymol (optional, for visualiztion) : https://pymol.org/2/  
 
 
 ## Input file generation  
